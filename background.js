@@ -15,9 +15,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     // Set half-time warning notification
     const halfTime = (minutes * 60 * 1000) / 2;
     const warningId = setTimeout(() => {
+        console.log("[FocusTimerX] Half-time notification should show now.");
       chrome.notifications.create('', {
         type: "basic",
-        iconUrl: "FocusTimerX.png",
+        iconUrl: "./FocusTimerX.png",
         title: "FocusTimerX",
         message: "Half your time is up on this TAB! Get ready to wrap it up."
       });
@@ -28,7 +29,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       chrome.tabs.remove(tabId, () => {
         chrome.notifications.create('', {
           type: "basic",
-          iconUrl: "FocusTimerX.png",
+          iconUrl: "./FocusTimerX.png",
           title: "FocusTimerX",
           message: "Your allowed time is up. Tab closed..."
         });
@@ -64,9 +65,10 @@ function restoreTimers() {
         if (timeLeft > 0) {
           // Re-arm half-time warning
           const warningId = setTimeout(() => {
+            console.log("[FocusTimerX] Half-time notification should show now.");
             chrome.notifications.create('', {
               type: "basic",
-              iconUrl: "FocusTimerX.png",
+              iconUrl: "./FocusTimerX.png",
               title: "FocusTimerX",
               message: "⏳ Half your time is up on this tab! Get ready to wrap up."
             });
@@ -77,7 +79,7 @@ function restoreTimers() {
             chrome.tabs.remove(timer.tabId, () => {
               chrome.notifications.create('', {
                 type: "basic",
-                iconUrl: "FocusTimerX.png",
+                iconUrl: "./FocusTimerX.png",
                 title: "FocusTimerX",
                 message: "Your allowed time is up. Tab closed!"
               });
