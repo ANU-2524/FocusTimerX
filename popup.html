@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FocusTimerX ⏳</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      body {
+        background: #212529;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #f1f3f4;
+        min-width: 270px;
+        padding: 20px 18px 18px 18px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px 0 rgba(44,62,80,.3), 0 1.5px 3px 0 rgba(0,0,0,0.1);
+      }
+      .header {
+        font-size: 1.2em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        letter-spacing: .06em;
+      }
+      .header img {
+        width: 26px;
+        height: 26px;
+        margin-right: 8px;
+      }
+      label {
+        color: #b5b7b9;
+        font-size: 1em;
+        margin: 5px 0 8px 0;
+        display: block;
+      }
+      .input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      #minutes {
+        padding: 7px 12px;
+        border: 1.5px solid #393a40;
+        border-radius: 8px;
+        outline: none;
+        width: 70px;
+        font-size: 1.05em;
+        margin-right: 10px;
+        background: #141517;
+        color: #f2f2f2;
+        transition: border-color .15s;
+      }
+      #minutes:focus {
+        border-color: #36cdfe;
+      }
+      #start-timer {
+        background: linear-gradient(90deg, #36cdfe 40%, #1ea0ef 100%);
+        color: #171818;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: 500;
+        padding: 7px 18px;
+        box-shadow: 0px 2px 6px rgba(30,160,239,0.07);
+        cursor: pointer;
+        transition: background .18s, transform .1s;
+      }
+      #start-timer:hover {
+        background: linear-gradient(90deg, #36cdfe 60%, #197cbc 100%);
+        transform: translateY(-2px) scale(1.04);
+      }
+      #status {
+        font-weight: 500;
+        font-size: .99em;
+        margin-top: 14px;
+        padding: 5px 0 0 0;
+        color: #7ef6b0;
+      }
+      .credit {
+        text-align: right;
+        margin-top: 21px;
+        font-size: .83em;
+        color: #525355;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <img src="./FocusTimerX.png" alt="FocusTimerX"/>
+      FocusTimerX
+    </div>
+    <form id="timer-form" autocomplete="off">
+      <label for="minutes">Set timer for this tab (minutes):</label>
+      <div class="input-group">
+        <input type="number" id="minutes" min="1" max="300" value="15"/>
+        <button id="start-timer" type="submit">Start 🕑</button>
+      </div>
+      <div id="status"></div>
+    </form>
+    <div class="credit">
+      © 2025 <b>Anu Soni</b> &mdash; FocusTimerX
+    </div>
+    <script src="popup.js"></script>
+    <link rel="icon" href="./FocusTimerX.png">
+
+  </body>
+</html>

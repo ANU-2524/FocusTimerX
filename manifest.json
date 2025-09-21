@@ -1,0 +1,19 @@
+{
+    "manifest_version" : 3 ,
+    "name" : "FocusTimerX" ,
+    "version" : "1.0" ,
+    "description" : "Smart Time-Boxing for Digital Distractions..." ,
+    "background" : {"server_worker" : "background.js" },
+    "actions" : {
+        "default_popup" : "popup.html"
+    } , 
+    "permissions" : ["tabs" , "storage" , "notifcations"] , 
+    "host_permissions" : ["<all_urls>"] ,
+    "content_scripts" : [
+        {
+            "matches" : ["<all_urls>"] , 
+            "js" : ["content.js"]
+        }
+    ] , 
+    "options_page" : "options.html" 
+}
