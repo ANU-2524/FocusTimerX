@@ -39,23 +39,35 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name.startsWith('warn_')) {
     const tabId = alarm.name.replace('warn_', '');
     chrome.notifications.create('', {
-      type: "basic",
-      iconUrl: "https://www.google.com/images/branding/product/1x/chrome_web_store_512dp.png" ,
+  type: "basic",
+  iconUrl: "https://www.google.com/images/branding/product/1x/chrome_web_store_512dp.png",
+  title: "FocusTimerX",
+  message: "⏳ Half your time is up on this tab! Get ready to wrap up."
+}, (notificationId) => {
+  if (chrome.runtime.lastError) {
+    console.error('WARN Notification error:', chrome.runtime.lastError);
+  } else {
+    console.log('WARN Notification created, id:', notificationId);
+  }
+});
 
-      title: "FocusTimerX",
-      message: "⏳ Half your time is up on this tab! Get ready to wrap up."
-    });
   }
   else if (alarm.name.startsWith('close_')) {
     const tabId = alarm.name.replace('close_', '');
     chrome.tabs.remove(Number(tabId), () => {
       chrome.notifications.create('', {
-        type: "basic",
-        iconUrl: "https://www.google.com/images/branding/product/1x/chrome_web_store_512dp.png"
-,
-        title: "FocusTimerX",
-        message: "Your allowed time is up. Tab closed!"
-      });
+  type: "basic",
+  iconUrl: "https://www.google.com/images/branding/product/1x/chrome_web_store_512dp.png",
+  title: "FocusTimerX",
+  message: "Your allowed time is up. Tab closed!"
+}, (notificationId) => {
+  if (chrome.runtime.lastError) {
+    console.error('CLOSE Notification error:', chrome.runtime.lastError);
+  } else {
+    console.log('CLOSE Notification created, id:', notificationId);
+  }
+});
+
       // Remove from chrome.storage
       chrome.storage.local.remove('ftx_timer_' + tabId);
       // Clean up alarms
