@@ -1,15 +1,18 @@
 const activeTimers = {};
 
+// Listen for timer start commands from popup
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action == "START_TIMER") {
     const tabId = msg.tabId;
     const minutes = msg.minutes;
 
+    // Clear any existing timers for this tab if restarting
     if (activeTimers[tabId]) {
       clearTimeout(activeTimers[tabId].timeoutId);
       clearTimeout(activeTimers[tabId].warningId);
     }
 
+    // Set half-time warning notification
     const halfTime = (minutes * 60 * 1000) / 2;
     const warningId = setTimeout(() => {
       chrome.notifications.create('', {
@@ -20,6 +23,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       });
     }, halfTime);
 
+    // Set time-up tab close
     const timeoutId = setTimeout(() => {
       chrome.tabs.remove(tabId, () => {
         chrome.notifications.create('', {
@@ -33,20 +37,23 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       chrome.storage.local.remove('ftx_timer_' + tabId); // Clean up storage!
     }, minutes * 60 * 1000);
 
+    // Persist to storage for resilience
     chrome.storage.local.set({
       ['ftx_timer_' + tabId]: {
         tabId: tabId,
         endTime: Date.now() + minutes * 60 * 1000,
-        warnTime: Date.now() + (minutes * 60 * 1000) / 2
+        warnTime: Date.now() + halfTime
       }
     });
 
+    // Save timer references in activeTimers object
     activeTimers[tabId] = { timeoutId, warningId };
-    sendResponse({ status: `Timer set : Tab will close in ${minutes} minutes!` });
+    sendResponse({ status: `Timer set: Tab will close in ${minutes} minutes!` });
   }
-  return true;
+  return true; // allow async sendResponse
 });
 
+// Restore all timers persisted in storage when extension loads or Chrome restarts
 function restoreTimers() {
   chrome.storage.local.get(null, (items) => {
     Object.keys(items).forEach((key) => {
@@ -55,6 +62,7 @@ function restoreTimers() {
         const timeLeft = timer.endTime - Date.now();
         const warnLeft = timer.warnTime - Date.now();
         if (timeLeft > 0) {
+          // Re-arm half-time warning
           const warningId = setTimeout(() => {
             chrome.notifications.create('', {
               type: "basic",
@@ -62,7 +70,9 @@ function restoreTimers() {
               title: "FocusTimerX",
               message: "⏳ Half your time is up on this tab! Get ready to wrap up."
             });
-          }, warnLeft);
+          }, warnLeft > 0 ? warnLeft : 0); // if late, trigger immediately
+
+          // Re-arm tab removal at time up
           const timeoutId = setTimeout(() => {
             chrome.tabs.remove(timer.tabId, () => {
               chrome.notifications.create('', {
@@ -75,6 +85,7 @@ function restoreTimers() {
             chrome.storage.local.remove(key);
             delete activeTimers[timer.tabId];
           }, timeLeft);
+
           activeTimers[timer.tabId] = { timeoutId, warningId };
         } else {
           chrome.storage.local.remove(key);
@@ -83,5 +94,6 @@ function restoreTimers() {
     });
   });
 }
+
 restoreTimers();
 chrome.runtime.onStartup.addListener(restoreTimers);
