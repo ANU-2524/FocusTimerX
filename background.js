@@ -40,7 +40,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     const tabId = alarm.name.replace('warn_', '');
     chrome.notifications.create('', {
   type: "basic",
-  iconUrl: "https://www.google.com/images/branding/product/1x/chrome_web_store_512dp.png",
+  iconUrl: "./FocusTimerX.png",
   title: "FocusTimerX",
   message: "⏳ Half your time is up on this tab! Get ready to wrap up."
 }, (notificationId) => {
@@ -58,7 +58,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     chrome.tabs.remove(Number(tabId), () => {
       chrome.notifications.create('', {
   type: "basic",
-  iconUrl: "https://www.google.com/images/branding/product/1x/chrome_web_store_512dp.png",
+  iconUrl: "./FocusTimerX.png",
   title: "FocusTimerX",
   message: "Your allowed time is up. Tab closed!"
 }, (notificationId) => {

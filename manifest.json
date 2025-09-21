@@ -7,6 +7,9 @@
     "action" : {
         "default_popup" : "popup.html"
     } , 
+    "icons": {
+     "128": "./FocusTimerX.png"
+        } , 
     "permissions" : ["tabs" , "storage" , "notifications" , "alarms"] , 
     "host_permissions" : ["<all_urls>"] ,
     "content_scripts" : [
