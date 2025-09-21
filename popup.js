@@ -1,4 +1,5 @@
-document.getElementById("start-timer").onclick = () => {
+document.getElementById("start-timer").onsubmit = (e) => {
+  e.preventDefault() ;
   const minutes = parseInt(document.getElementById("minutes").value, 10);
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const tabId = tabs[0].id;
