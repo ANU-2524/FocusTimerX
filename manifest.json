@@ -4,10 +4,10 @@
     "version" : "1.0" ,
     "description" : "Smart Time-Boxing for Digital Distractions..." ,
     "background" : {"server_worker" : "background.js" },
-    "actions" : {
+    "action" : {
         "default_popup" : "popup.html"
     } , 
-    "permissions" : ["tabs" , "storage" , "notifcations"] , 
+    "permissions" : ["tabs" , "storage" , "notifications"] , 
     "host_permissions" : ["<all_urls>"] ,
     "content_scripts" : [
         {
