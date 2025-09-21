@@ -45,7 +45,8 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   message: "⏳ Half your time is up on this tab! Get ready to wrap up."
 }, (notificationId) => {
   if (chrome.runtime.lastError) {
-    console.error('WARN Notification error:', chrome.runtime.lastError);
+    console.error('WARN Notification error:', chrome.runtime.lastError, JSON.stringify(chrome.runtime.lastError));
+
   } else {
     console.log('WARN Notification created, id:', notificationId);
   }
@@ -62,7 +63,8 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   message: "Your allowed time is up. Tab closed!"
 }, (notificationId) => {
   if (chrome.runtime.lastError) {
-    console.error('CLOSE Notification error:', chrome.runtime.lastError);
+    console.error('CLOSE Notification error:', chrome.runtime.lastError, JSON.stringify(chrome.runtime.lastError));
+
   } else {
     console.log('CLOSE Notification created, id:', notificationId);
   }
