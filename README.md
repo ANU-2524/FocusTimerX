@@ -1,1 +1,1 @@
-# FocusGuard
+FocusTimerX - Chrome Extension 
